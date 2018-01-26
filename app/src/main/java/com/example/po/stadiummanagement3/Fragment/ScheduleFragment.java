@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.po.stadiummanagement3.Adapter.ScheduleAdapter;
+import com.example.po.stadiummanagement3.Gson.AreaInfo;
 import com.example.po.stadiummanagement3.Gson.OrderSet;
 import com.example.po.stadiummanagement3.R;
 import com.example.po.stadiummanagement3.WebService.HttpService;
+import com.google.gson.reflect.TypeToken;
 import com.loonggg.weekcalendar.view.WeekCalendar;
 
 import java.io.IOException;
@@ -28,6 +30,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Response;
 /**
  * Created by 13701 on 2017/11/29.
@@ -113,42 +117,27 @@ public class ScheduleFragment extends Fragment {
         return v;
     }
     private void initTimeGroup(){
+        HttpService.sendOkHttpRequest("stadium/all", new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
 
-        try {
-            Response response = HttpService.sendGetRequest("stadium/all");
-            String s = response.body().string();
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String s = response.body().string();
+                int i =0;
+                //list = gson.fromJson(s,
+                        //new TypeToken<List<AreaInfo>>(){}.getType());
+            }
+        });
 
         for(int i=0;i<5;i++){
             timeList.add(new OrderSet(true));
         }
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
-        if(hour>=8){
-            timeList.get(0).setCanOrder(false);
-        }
-        if(hour>=10){
-            timeList.get(1).setCanOrder(false);
-        }
-        if(hour>=12){
-            timeList.get(2).setCanOrder(false);
-        }
-        if(hour>=14){
-            timeList.get(3).setCanOrder(false);
-        }
-        if(hour>=16){
-            timeList.get(4).setCanOrder(false);
-        }
-        if(hour>=18){
-            timeList.get(5).setCanOrder(false);
-        }
+
     }
 
     private void showDialog(final int position){

@@ -62,6 +62,9 @@ public class LoginFragment extends Fragment {
                         boolean flag = loginValidate(t_id.getText().toString(), t_pass.getText().toString());
                         if(flag){
                             Intent intent = new Intent(getActivity(), MainActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("phoneNum","15801791260");
+                            intent.putExtras(bundle);
                             getActivity().startActivity(intent);
                         }else{
                             Toast.makeText(getActivity(),"oops,something went wrong",Toast.LENGTH_LONG).show();

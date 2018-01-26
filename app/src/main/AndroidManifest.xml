@@ -54,6 +54,9 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <activity android:name=".Activity.BindActivity">
+
+        </activity>
         <service
             android:name=".step.service.StepService"
             android:process="com.base.basepedo.step"

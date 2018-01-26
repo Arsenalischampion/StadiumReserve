@@ -1,6 +1,7 @@
 	package com.example.po.stadiummanagement3.Fragment;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.po.stadiummanagement3.Activity.ReleaseActivity;
+import com.example.po.stadiummanagement3.Gson.UserInstance;
 import com.example.po.stadiummanagement3.R;
 
 import butterknife.BindView;
@@ -35,13 +39,31 @@ public class MainFragment extends Fragment
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.navigation_bar) BottomNavigationBar bottomNavigationBar;
     @BindView(R.id.fab_main) FloatingActionButton mfab;
+    private String phoneNum;
     private HomeFragment homeFragment;
     private ReserveFragment reserveFragment;
     private MomentFragment momentFragment;
+
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        getActivity().getMenuInflater().inflate(R.menu.activity_main_drawer,menu);
+        if(UserInstance.userInfo==null){
+
+        }else{
+            MenuItem  phone = menu.findItem(R.id.phone);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_main,container,false);
+        Bundle bundle = MainFragment.this.getArguments();
+        //phoneNum = bundle.getString("phoneNum");
+
         homeFragment = new HomeFragment();
         reserveFragment = new ReserveFragment();
         momentFragment = new MomentFragment();
@@ -67,7 +89,7 @@ public class MainFragment extends Fragment
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getContext(),"111111",Toast.LENGTH_SHORT).show();
+                //xToast.makeText(getContext(),"111111",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), ReleaseActivity.class);
                 startActivity(intent);
             }
